@@ -1,60 +1,64 @@
-#RGB controling using Blynk cloude text input
-import BlynkLib as blynklib
 import network
-import uos
-import utime as time
-from machine import Pin, I2C, Timer
+import BlynkLib
+from machine import Pin
+import time
 from neopixel import NeoPixel
-#from machine import Pin, I2C, Timer
-import ssd1306
 
-WIFI_SSID = 'NTU FSD'
-WIFI_PASS = ''
+# Wi-Fi Credentials
+SSID = "Galaxy A107BCB"
+PASSWORD = "yuvx7525"
 BLYNK_AUTH = "QBljAckguL3e6mbafoZBV0a341ox8ZcN"
 
-print("Connecting to WiFi network '{}'".format(WIFI_SSID))
+# Connect to Wi-Fi
 wifi = network.WLAN(network.STA_IF)
 wifi.active(True)
-wifi.connect(WIFI_SSID, WIFI_PASS)
+wifi.connect(SSID, PASSWORD)
+
 while not wifi.isconnected():
+    print("Connecting to Wi-Fi...")
     time.sleep(1)
-    print('WiFi connect retry ...')
-print('WiFi IP:', wifi.ifconfig()[0])
 
-print("Connecting to Blynk server...")
-blynk = blynklib.Blynk(BLYNK_AUTH)
+print("Connected to Wi-Fi:", wifi.ifconfig())
 
+# Blynk Authentication Token
 
+blynk = BlynkLib.Blynk(BLYNK_AUTH)
 
-i2c = I2C(1, scl=Pin(9), sda=Pin(8), freq= 200000)
-oled = ssd1306.SSD1306_I2C(128, 64, i2c)
+# NeoPixel Setup
+PIN = Pin(48, Pin.OUT)
+led = NeoPixel(PIN, 1)
 
+# Track LED states
+led_state = {'red': 0, 'green': 0, 'blue': 0}
 
-
-
-# Blynk Handlers for Virtual Pins
-@blynk.on("V0")  # Red Slider
-def v0_handler(value):
-    try:
-        # Parse the input text (expected format: "R,G,B")
-        oled.fill(0)
-        
-        oled.text(value[0], 5,5)
-        oled.show()
-    except Exception as e:
-        print("Invalid input:", e)
-    
 @blynk.on("connected")
 def blynk_connected():
-    print("Blynk Connected!")
-    blynk.sync_virtual(0)  # Sync RGB sliders from the app
+    print("✅ Blynk Connected!")
 
-@blynk.on("disconnected")
-def blynk_disconnected():
-    print("Blynk Disconnected!")
+# Function to update LED color
+def update_led():
+    led[0] = (led_state['red'], led_state['green'], led_state['blue'])
+    led.write()
+    print(f"LED Updated: {led_state}")  # Debugging info
 
-# Main Loop
+# Blynk Virtual Pin Handlers
+@blynk.on('V1')  # Green LED
+def green_led(value):
+    led_state['green'] = int(value[0]) * 255
+    update_led()
+
+@blynk.on('V2')  # Red LED
+def red_led(value):
+    led_state['red'] = int(value[0]) * 255
+    update_led()
+
+@blynk.on('V3')  # Blue LED
+def blue_led(value):
+    led_state['blue'] = int(value[0]) * 255
+    update_led()
+
+# Main loop
+print("🚀 Blynk Running...")
 while True:
     blynk.run()
-    
-
+    time.sleep(0.1)
