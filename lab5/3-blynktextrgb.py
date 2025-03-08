@@ -1,17 +1,16 @@
-#RGB controling using Blynk cloude text input
-#rgb text device
+#Blynk rgb1 template
+#control rgb through 3 sliders
 import BlynkLib as blynklib
 import network
 import uos
 import utime as time
-from machine import Pin, I2C, Timer
+from machine import Pin
 from neopixel import NeoPixel
-#from machine import Pin, I2C, Timer
-import ssd1306
 
-WIFI_SSID = 'your network/hotspot ssid'
-WIFI_PASS = 'your network/hotspot password'
-BLYNK_AUTH = "your blynk device authentication"
+WIFI_SSID = 'GALAXY A107BCB'
+WIFI_PASS = 'yuvx7525'
+BLYNK_AUTH = "QBljAckguL3e6mbafoZBV0a341ox8ZcN"
+
 
 print("Connecting to WiFi network '{}'".format(WIFI_SSID))
 wifi = network.WLAN(network.STA_IF)
@@ -29,9 +28,6 @@ blynk = blynklib.Blynk(BLYNK_AUTH)
 pin = Pin(48, Pin.OUT)
 np = NeoPixel(pin, 1)
 
-i2c = I2C(1, scl=Pin(9), sda=Pin(8), freq= 200000)
-oled = ssd1306.SSD1306_I2C(128, 64, i2c)
-
 def set_color(r, g, b):
     np[0] = (r, g, b)
     np.write()
@@ -44,17 +40,25 @@ b = 0
 # Blynk Handlers for Virtual Pins
 @blynk.on("V0")  # Red Slider
 def v0_handler(value):
-    try:
-        # Parse the input text (expected format: "R,G,B")
-        r, g, b = map(int, value[0].split(','))
+    global r
+    if value and value[0].isdigit():  # Ensure value is valid
+        r = int(value[0])
         set_color(r, g, b)
-        oled.fill(0)
-        oled.text("RGB Value", 18, 16)
-        oled.text(value[0], 23, 32)
-        oled.show()
-    except Exception as e:
-        print("Invalid input:", e)
-    
+
+@blynk.on("V1")  # Green Slider
+def v1_handler(value):
+    global g
+    if value and value[0].isdigit():
+        g = int(value[0])
+        set_color(r, g, b)
+
+@blynk.on("V2")  # Blue Slider
+def v2_handler(value):
+    global b
+    if value and value[0].isdigit():
+        b = int(value[0])
+        set_color(r, g, b)
+
 @blynk.on("connected")
 def blynk_connected():
     print("Blynk Connected!")
@@ -67,5 +71,3 @@ def blynk_disconnected():
 # Main Loop
 while True:
     blynk.run()
-    
-

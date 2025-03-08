@@ -7,9 +7,9 @@ import utime as time
 from machine import Pin
 from neopixel import NeoPixel
 
-WIFI_SSID = 'your network/hotspot ssid'
-WIFI_PASS = 'your network/hotspot password'
-BLYNK_AUTH = "your blynk device authentication"
+WIFI_SSID = 'GALAXY A107BCB'
+WIFI_PASS = 'yuvx7525'
+BLYNK_AUTH = "QBljAckguL3e6mbafoZBV0a341ox8ZcN"
 
 print("Connecting to WiFi network '{}'".format(WIFI_SSID))
 wifi = network.WLAN(network.STA_IF)
@@ -40,20 +40,23 @@ b = 0
 @blynk.on("V0")  # Red Slider
 def v0_handler(value):
     global r
-    r = int(value[0])
-    set_color(r, g, b)
+    if value and value[0].isdigit():  # Ensure value is valid
+        r = int(value[0])
+        set_color(r, g, b)
 
 @blynk.on("V1")  # Green Slider
 def v1_handler(value):
     global g
-    g = int(value[0])
-    set_color(r, g, b)
+    if value and value[0].isdigit():
+        g = int(value[0])
+        set_color(r, g, b)
 
 @blynk.on("V2")  # Blue Slider
 def v2_handler(value):
     global b
-    b = int(value[0])
-    set_color(r, g, b)
+    if value and value[0].isdigit():
+        b = int(value[0])
+        set_color(r, g, b)
 
 @blynk.on("connected")
 def blynk_connected():
