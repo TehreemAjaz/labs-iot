@@ -5,8 +5,8 @@ import time
 from neopixel import NeoPixel
 
 # Wi-Fi Credentials
-SSID = "Galaxy A107BCB"
-PASSWORD = "yuvx7525"
+SSID = "NTU FSD"
+PASSWORD = " "
 BLYNK_AUTH = "QBljAckguL3e6mbafoZBV0a341ox8ZcN"
 
 # Connect to Wi-Fi

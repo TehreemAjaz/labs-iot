@@ -7,8 +7,8 @@ import utime as time
 from machine import Pin
 from neopixel import NeoPixel
 
-WIFI_SSID = 'GALAXY A107BCB'
-WIFI_PASS = 'yuvx7525'
+WIFI_SSID = 'DCS'
+WIFI_PASS = '3S8XqZz5'
 BLYNK_AUTH = "QBljAckguL3e6mbafoZBV0a341ox8ZcN"
 
 
