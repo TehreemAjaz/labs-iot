@@ -7,9 +7,9 @@ WIFI_SSID = 'Tehreem'
 WIFI_PASS = 'timi1234'
 
 # Static IP configuration
-STATIC_IP = "192.168.18.60"  # Replace with your desired static IP/
+STATIC_IP = "192.168.116.39"  # Replace with your desired static IP/
 SUBNET_MASK = "255.255.255.0"
-GATEWAY = "192.168.18.1"  # Replace with your router's IP/hotspot
+GATEWAY = "192.168.116.38"  # Replace with your router's IP/hotspot
 DNS_SERVER = "8.8.8.8"  # Google DNS
 
 
