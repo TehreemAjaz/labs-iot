@@ -1,0 +1,11 @@
+task3:
+
+A debounce issue occurs when mechanical switches or buttons generate multiple unwanted signals due to their physical properties. When a button is pressed or released, it does not make a clean transition; instead, it may "bounce" between states, causing multiple unintended inputs. This issue is particularly problematic in embedded systems, user interfaces, and real-time applications where precise input detection is necessary. If not resolved, debounce issues can cause system instability, incorrect data processing, and even operational failures in critical domains such as medical devices, industrial automation, and safety systems. Debounce occurs due to the physical nature of mechanical components rather than a compiler or logical error. It is not necessarily related to a cheap microcontroller but rather to the way switches and buttons function. Software-based solutions, such as implementing a debounce algorithm using timers, or hardware-based approaches, such as using capacitors or Schmitt triggers, can effectively eliminate this issue.
+
+task4:
+
+Why do we use interrupts?
+Interrupts are used in microcontrollers to handle time-sensitive tasks efficiently without constantly checking for events in a loop. They allow the processor to respond to specific signals or events, such as user inputs, sensor readings, or communication requests, without continuously polling for changes. This improves system responsiveness and optimizes CPU usage, making the system more efficient.
+
+How does an interrupt lower the processing cost of the microcontroller?
+Interrupts lower the processing cost by allowing the microcontroller to execute other tasks or enter a low-power state instead of continuously checking for events. When an interrupt occurs, the processor temporarily pauses its current task, handles the interrupt, and then resumes normal operation. This eliminates unnecessary CPU cycles spent on polling, reducing power consumption and improving overall system performance.
